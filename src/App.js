@@ -1,11 +1,20 @@
 import ShoppingItem from './ShoppingItem';
 import Headline from './Headline';
 import Form from './Form';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const [shoppingItems, setShoppingItems] = useState([]);
+  const LOCAL_STORAGE_KEY = 'hogwartsShoppingList';
+  const [shoppingItems, setShoppingItems] = useState(loadFromLocal ?? []);
+
+  function loadFromLocal(key = LOCAL_STORAGE_KEY) {
+    return JSON.parse(localStorage.getItem(key));
+  }
+
+  useEffect(() => {
+    localStorage.setItem('hogwartsShoppingList', JSON.stringify(shoppingItems));
+  }, [shoppingItems]);
 
   function addShoppingItem(title) {
     const newShoppingItem = { title: title, isDone: false, id: uuidv4() };
@@ -21,18 +30,6 @@ function App() {
     });
     setShoppingItems(itemToToggle);
   }
-  /*Alte Lösung über Index 
-  function toggleCheckbox(indexToToggle) {
-    const itemToToggle = shoppingItems.find(
-      (item, index) => index === indexToToggle
-    );
-    itemToToggle.isDone = !itemToToggle.isDone;
-
-    const firstHalf = shoppingItems.slice(0, indexToToggle);
-    const secondHalf = shoppingItems.slice(indexToToggle + 1);
-
-    setShoppingItems([...firstHalf, itemToToggle, ...secondHalf]);
-  } */
 
   function deleteShoppingItem(idToDelete) {
     const remainingItems = shoppingItems.filter(
