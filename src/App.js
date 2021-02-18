@@ -3,17 +3,17 @@ import Headline from './Headline';
 import Form from './Form';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import loadFromLocal from './lib/LoadFromLocal';
+import saveToLocal from './lib/SaveToLocal';
 
 function App() {
   const LOCAL_STORAGE_KEY = 'hogwartsShoppingList';
-  const [shoppingItems, setShoppingItems] = useState(loadFromLocal ?? []);
-
-  function loadFromLocal(key = LOCAL_STORAGE_KEY) {
-    return JSON.parse(localStorage.getItem(key));
-  }
+  const [shoppingItems, setShoppingItems] = useState(
+    loadFromLocal(LOCAL_STORAGE_KEY) ?? []
+  );
 
   useEffect(() => {
-    localStorage.setItem('hogwartsShoppingList', JSON.stringify(shoppingItems));
+    saveToLocal(LOCAL_STORAGE_KEY, shoppingItems);
   }, [shoppingItems]);
 
   function addShoppingItem(title) {
