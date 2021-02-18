@@ -3,8 +3,8 @@ import Headline from './Headline';
 import Form from './Form';
 import { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import loadFromLocal from './lib/LoadFromLocal';
-import saveToLocal from './lib/SaveToLocal';
+import loadFromLocal from './lib/loadFromLocal';
+import saveToLocal from './lib/saveToLocal';
 
 function App() {
   const LOCAL_STORAGE_KEY = 'hogwartsShoppingList';

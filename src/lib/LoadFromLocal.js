@@ -1,4 +1,4 @@
-export default function LoadFromLocal(key) {
+export default function loadFromLocal(key) {
   try {
     const storedItems = localStorage.getItem(key);
     return JSON.parse(storedItems);
